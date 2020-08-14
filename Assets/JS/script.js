@@ -38,20 +38,30 @@ function searchBook(title) {
         var isbnNumber = response.items[0].volumeInfo.industryIdentifiers[0].identifier;
         console.log(isbnNumber)
 
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        // const proxyurl = "https://cors-anywhere.herokuapp.com/";
         // var goodreadsQueryURL = "https://www.goodreads.com/book/review_counts.json?isbns=" + isbnNumber + "key=cU7MkZMEBPNFmw5qMfbw"; // site that doesn’t send Access-Control-*
         // fetch(proxyurl + goodreadsQueryURL) // https://cors-anywhere.herokuapp.com/https://example.com
         //     .then(response => response.text())
         //     .then(contents => console.log(contents))
         //     .catch(() => console.log("Can’t access " + goodreadsQueryURL + " response. Blocked by browser?"))
-        var goodreadsQueryURL = "www.goodreads.com/book/review_counts.json?isbns=" + isbnNumber + "key=cU7MkZMEBPNFmw5qMfbw";
+        // var goodreadsQueryURL = "https://www.goodreads.com/book/review_counts.json?isbns=" + isbnNumber + "key=cU7MkZMEBPNFmw5qMfbw";
 
-        $.ajax({
-            url: (proxyurl + goodreadsQueryURL),
-            method: "GET"
-        }).then(function (nextResponse) {
-            console.log(nextResponse)
-        })
+        // $.ajax({
+        //     url: (proxyurl + goodreadsQueryURL),
+        //     method: "GET"
+        // }).then(function (nextResponse) {
+        //     console.log(nextResponse)
+        // })
+
+
+        var x = new XMLHttpRequest();
+        x.open('GET', ("https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/review_counts.json?isbns=" + isbnNumber + "key=cU7MkZMEBPNFmw5qMfbw"));
+        // I put "XMLHttpRequest" here, but you can use anything you want.
+        x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        x.onload = function () {
+            console.log(x.responseText);
+        };
+        x.send();
     });
 
 }
